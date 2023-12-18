@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="col-sm-4">        
+    <div class="row">
+        <div class="col-sm-9">
+            <h4>{{ langService.langData.userInformation }}</h4>
+        </div>
+        <div class="col-sm-3 text-right">
+            <button type="submit" class="btn btn-primary btn-sm" (click)="addNew()">{{ langService.langData.addNew }}</button>        
+        </div>
+    </div>
+
+    <form [formGroup]="userData" (ngSubmit)="postDate()">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label>{{ langService.langData.departureAirportCode }}</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="DepartureAirportCode" maxlength="3"
+                    (keypress)="keyPressAlphanumeric($event)"
+                    >                        
+                    <small class="text-danger" *ngIf="userData.get('DepartureAirportCode').hasError('maxLength')">{{ langService.langData.airlineLogo }}Max length is 3 character</small>                                                
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">{{ langService.langData.arrivalAirportCode }}</label>
+                    <input type="text" class="form-control form-control-sm" formControlName="ArrivalAirportCode" maxlength="3"
+                    (keypress)="keyPressAlphanumeric($event)"
+                    >                         
+                    <small class="text-danger" *ngIf="userData.get('DepartureAirportCode').hasError('maxLength')">Max length is 3 character {{ langService.langData.airlineLogo }}</small>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">{{ langService.langData.departureDate }}</label>
+                    <input type="datetime-local" class="form-control form-control-sm" formControlName="DepartureDate">         
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Return date {{ langService.langData.returnDate }}</label>
+                    <input type="datetime-local" class="form-control form-control-sm" formControlName="ReturnDate">         
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary btn-sm">{{ langService.langData.submit }}</button>
+           </div>
+        </div>
+    </form>
+    
+</div>
+
+
+  <div class="col-sm-8">
+    <div class="row">
+      <div class="col-sm-8">
+        <h4>{{ langService.langData.airlineInformation }}</h4>
+      </div>
+      <div class="col-sm-4">
+        <input type="text" #itemSearchInput class="form-control form-control-sm" placeholder="Search" />
+      </div>
+    </div>
+    <br>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{{ langService.langData.airlineLogo }}</th>
+          <th>{{ langService.langData.airlineName }}</th>
+          <th>{{ langService.langData.outboundFlightDuration }}</th>
+          <th>{{ langService.langData.inboundFlightDuration }}</th>
+          <th>{{ langService.langData.totalAmountInUSD }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of airlineInfoList; let i = index; trackBy: trackByFn">            
+          <td><img src="{{ item.AirlineLogoAddress }}" alt="Airline logo"></td>
+          <td>{{ item.AirlineName }}</td>
+          <td>{{ item.InboundFlightsDuration }}</td>
+          <td>{{ item.OutboundFlightsDuration }}</td>
+          <td>{{ item.TotalAmount | currency }}</td>          
+        </tr>                    
+      </tbody>
+    </table>
+  </div>
+</div>
